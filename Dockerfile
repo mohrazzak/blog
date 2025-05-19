@@ -1,31 +1,44 @@
-# Use a specific node version for consistency
+# Use Node 18 slim for consistency and small size
 FROM node:18-slim
 
 # Set working directory
 WORKDIR /usr/blog
 
-# Install system dependencies for native modules
-RUN apt-get update && \
-    apt-get install -y python3 build-essential && \
-    rm -rf /var/lib/apt/lists/*
+# Install system dependencies needed for sharp and other native modules
+RUN apt-get update && apt-get install -y \
+    python3 \
+    build-essential \
+    libcairo2-dev \
+    libjpeg-dev \
+    libpango1.0-dev \
+    libgif-dev \
+    librsvg2-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install PNPM version matching your local version
+# Install pnpm globally (matching local version)
 RUN npm install -g pnpm@10.8.1
 
-# Copy lockfiles first to leverage Docker cache
+# Copy package.json and lockfile first to leverage cache
 COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies with frozen lockfile for deterministic builds
+# Install dependencies with frozen lockfile for deterministic installs
 RUN pnpm install --frozen-lockfile
 
-# Copy rest of the source code
+# Copy all source files
 COPY . .
 
-# Rebuild native modules (like bcrypt)
-RUN pnpm rebuild bcrypt
+# Rebuild native modules - bcrypt and sharp
+RUN pnpm rebuild bcrypt sharp
 
-# Build the app (NestJS build)
+# Build the NestJS app
 RUN pnpm run build
 
-# Run the compiled app
+# Use a non-root user for security (optional but recommended)
+RUN useradd -m appuser
+USER appuser
+
+# Expose port (adjust if your app listens on a different port)
+EXPOSE 3000
+
+# Start the app
 CMD ["node", "dist/main.js"]

@@ -6,7 +6,7 @@ import {
 
 import { SignInDto } from "./dtos/signin.dto";
 
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import { SignUpDto } from "./dtos/signup.dto";
 import { JwtService } from "@nestjs/jwt";
 import { UsersRepository } from "../users/users.repository";
