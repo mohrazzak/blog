@@ -1,19 +1,27 @@
 FROM node:18-slim
 
+# Set working directory
 WORKDIR /usr/blog
 
-# Install dependencies and build tools required for native modules like bcrypt
+# Install required build tools for bcrypt and other native modules
 RUN apt-get update && \
-    apt-get install -y openssl python3 build-essential && \
+    apt-get install -y python3 build-essential && \
     rm -rf /var/lib/apt/lists/*
 
-# Install PNPM & dependencies
-COPY package.json ./
-COPY pnpm-lock.yaml ./
-RUN npm install -g pnpm && pnpm install
+# Copy only the package files first for better Docker caching
+COPY package.json pnpm-lock.yaml ./
 
-# Copy the rest of the source code
+# Install PNPM globally and app dependencies
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
+
+# Copy the rest of your source code
 COPY . .
 
-# Start the app
-CMD ["npm", "run", "start"]
+# Rebuild native modules inside the Docker container (important for bcrypt)
+RUN pnpm rebuild bcrypt
+
+# Build the NestJS app (transpile TypeScript)
+RUN pnpm run build
+
+# Use node to run the compiled app
+CMD ["node", "dist/main.js"]
