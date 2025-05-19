@@ -60,8 +60,8 @@ $ npm run test:e2e
 ```
 # 📝documents
 
-### Database Diagram :
-- https://dbdiagram.io/d/636413aec9abfc6111702982
+### Database Diagram ![image](https://github.com/user-attachments/assets/6e97a77b-76ee-4705-96b5-f2484c186eed)
+
 
 
 ### swagger-ui
