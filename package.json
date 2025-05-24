@@ -40,6 +40,7 @@
     "class-validator": "^0.13.2",
     "dotenv-cli": "^6.0.0",
     "graphql": "^16.6.0",
+    "ioredis": "^5.6.1",
     "multer": "1.4.5-lts.1",
     "nanoid": "^3.3.4",
     "nodemailer": "^6.7.7",
@@ -83,13 +84,19 @@
     "typescript": "^4.3.5"
   },
   "jest": {
-    "moduleFileExtensions": ["js", "json", "ts"],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "collectCoverageFrom": ["**/*.(t|j)s"],
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
     "moduleNameMapper": {
       "^src/(.*)$": "<rootDir>/$1"
     },
