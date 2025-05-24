@@ -2,13 +2,6 @@ version: '3.8'
 
 services:
 
-  redis:
-    image: redis
-    expose:
-      - 6379
-    profiles:
-      - product
-
   app:
     build:
       context: .
@@ -17,45 +10,5 @@ services:
       - .env
     ports:
       - "${PORT}:${PORT}"
-    volumes:
-      - ./my-uploads:/usr/blog/uploads
     profiles:
       - product
-
-  mysqldb:
-    image: mysql:5.7
-    env_file:
-      - .env
-    ports:
-      - "${MYSQL_PORT}:3306"
-    expose:
-      - 3306
-    environment:
-      MYSQL_DATABASE: "${MYSQL_DATABASE}"
-      MYSQL_USER: "${MYSQL_USER}"
-      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      SERVICE_TAGS: prod
-      SERVICE_NAME: mysqldb
-    volumes:
-      - ./db-data:/var/lib/mysql
-    profiles:
-      - product
-
-  mysqldb-test:
-    image: mysql:5.7
-    ports:
-      - '3308:3306'
-    environment:
-      MYSQL_DATABASE: blog
-      MYSQL_USER: prisma
-      MYSQL_PASSWORD: prisma
-      MYSQL_ROOT_PASSWORD: prisma
-      SERVICE_TAGS: prod
-      SERVICE_NAME: mysqldb
-    profiles:
-      - test
-
-volumes:
-  mysql-data:
-  my-uploads:
