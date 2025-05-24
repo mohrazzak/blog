@@ -15,7 +15,6 @@ lerna-debug.log*
 .DS_Store
 
 uploads/*
-package-lock.json
 # Tests
 /coverage
 /.nyc_output
