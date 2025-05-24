@@ -67,4 +67,7 @@ $ npm run test:e2e
 ### swagger-ui
 - http://localhost:{port}/api
 
-![Swagger](/github/swagger.png)
+![image](https://github.com/user-attachments/assets/d72e987c-0d9c-4a75-917e-4c63d0bf9acf)
+
+![image](https://github.com/user-attachments/assets/7833bbfc-c354-44dd-8eb5-e98a10cb378e)
+
