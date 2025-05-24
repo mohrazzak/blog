@@ -5,7 +5,6 @@ WORKDIR /usr/blog
 RUN apk add --update --no-cache openssl1.1-compat
 
 COPY package.json ./
-COPY package-lock.json ./
 
 
 
