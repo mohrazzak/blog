@@ -36,9 +36,7 @@ const providerAndExports = [
   imports: [
     BullModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
-        redis: {
-          host: config.get<string>("REDIS_URL"),
-        },
+        url: config.get<string>("REDIS_URL"),
       }),
       inject: [ConfigService],
     }),
