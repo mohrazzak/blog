@@ -13,4 +13,5 @@ RUN npm install
 COPY . ./
 
 
-CMD ["nest","start"]
+RUN ["npm","run","build"]
+CMD ["npm","run","start:prod"]

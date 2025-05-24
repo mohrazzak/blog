@@ -13,16 +13,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on:
-      - redis
-      - mysqldb
     env_file:
       - .env
     ports:
       - "${PORT}:${PORT}"
-    environment:
-      DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysqldb:3306/${MYSQL_DATABASE}"
-      REDIS_URL: redis
     volumes:
       - ./my-uploads:/usr/blog/uploads
     profiles:
